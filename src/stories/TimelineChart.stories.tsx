@@ -89,9 +89,7 @@ ToggledLines.play = async ({ canvasElement, args, loaded }) => {
 
 export const SelectedLine = Template.bind({});
 SelectedLine.args = LEGEND_ARGS;
-SelectedLine.play = async (h) => {
-  const { canvasElement, args, loaded } = h;
-
+SelectedLine.play = async ({ canvasElement, args, loaded }) => {
   const canvas = within(canvasElement);
 
   const line = await canvas.getByTestId(
@@ -124,7 +122,7 @@ SelectedLine.play = async (h) => {
 export const ToggledLinesAndSelectedLine = Template.bind({});
 ToggledLinesAndSelectedLine.storyName = "Toggled Lines + Selected Line";
 ToggledLinesAndSelectedLine.args = LEGEND_ARGS;
-ToggledLinesAndSelectedLine.play = async (h) => {
-  await ToggledLines.play(h);
-  await SelectedLine.play(h);
+ToggledLinesAndSelectedLine.play = async (context) => {
+  await ToggledLines.play(context);
+  await SelectedLine.play(context);
 };
