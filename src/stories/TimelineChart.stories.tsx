@@ -37,13 +37,25 @@ const BASE_ARGS = {
 
 interface TemplateProps extends TimelineChartProps {
   isEmpty?: boolean;
+  isSingleLine?: boolean;
 }
 
-const Template: Story<TemplateProps> = ({ isEmpty, ...args }, { loaded }) => {
+const Template: Story<TemplateProps> = (
+  { isEmpty, isSingleLine, ...args },
+  { loaded }
+) => {
   return (
     <TimelineChart
       {...args}
-      data={isEmpty ? args.data : loaded ? loaded.timelineChartData : args.data}
+      data={
+        isEmpty
+          ? []
+          : loaded
+          ? isSingleLine
+            ? [loaded.timelineChartData[0]]
+            : loaded.timelineChartData
+          : args.data
+      }
     />
   );
 };
@@ -51,6 +63,7 @@ const Template: Story<TemplateProps> = ({ isEmpty, ...args }, { loaded }) => {
 export const Default = Template.bind({});
 Default.args = {
   ...BASE_ARGS,
+  isSingleLine: true,
 };
 
 export const Empty = Template.bind({});
